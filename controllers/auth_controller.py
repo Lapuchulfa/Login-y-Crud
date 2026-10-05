@@ -1,6 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required, login_user, logout_user
-from flask_wtf import form
 from forms.auth_forms import LoginForms, RegistroForm
 from models import usuario_model
 

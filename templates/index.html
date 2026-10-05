@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head> 
+
+    <meta charset="UTF-8">
+    <title> CRUD Simple de productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+</head>
+    
+<body>
+
+
+
+    <h1 class = "text-center mt-5 mb-5 text-primary">Flask CRUD </h1>
+
+    <div class="container text-center mb-3">
+        Hola <strong>{{ current_user.nombre}} {{ current_user.apellido}}</strong> <!-- Muestra el nombre y apellido del usuario que ha iniciado sesion -->
+        <form action="{{url_for('auth.logout')}}" method="post" class="d-inline ms-2">
+            <button type="submit" class="btn btn-outline-secondary btn-sm"> Cerrar Sesión</button>
+
+        </form>
+    </div>
+
+    <div class="container">  <!-- funcion princiapl para centrar el contenido de la pagina -->
+        <div class="card shadow"> <!-- agrupar el contenido de la pagina en una tarjeta -->
+            <div class="card-body"> <!--le da espacio al contenido de la tarjeta -->
+                <form action="/producto" method="POST"> <!-- formulario para enviar los datos al archivo de ejecutacion que seria main.py -->
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Nombre Producto</label>
+                            <input type="text" class="form-control mb-3" name="Nombre_Producto">
+
+                        </div>
+                         <div class="col">
+                            <label>Categoria Producto</label>
+                            <input type="text" class="form-control mb-3" name="Categoria_Producto">
+
+                        </div>
+                         <div class="col">
+                            <label>Precio</label>
+                            <input type="text" class="form-control mb-3" name="Precio">
+
+                        </div>
+                         <div class="col">
+                           <button class="btn btn-primary mb-3 mt-4" type="submit">Guardar</button>
+
+                        </div>
+                    </div>
+                </form>
+
+                <!-- tabla para mostrar los productos -->
+                <table class="table table-bordered">
+                    <thead>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre Producto</th>
+                        <th scope="col">Categoria Producto</th>
+                        <th scope="col">Precio</th>
+                        <!-- esto nos servira para las acciones con botones-->
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
+                    </thead>
+                
+                <tbody>
+                    {% for i in productos %} <!-- Recorre la lista de datos -->
+                    <tr>
+                        <td>{{i.ID_Producto}}</td>
+                        <td>{{i.Nombre_Producto}}</td>
+                        <td>{{i.Categoria_Producto}}</td>
+                        <td>{{i.Precio}}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modal{{i.ID_Producto}}">Editar</button>
+                        </td>
+                        <!-- Boton para editar el producto, al hacer click se abre un modal con el formulario de edicion -->
+                         <!-- data-bs-toggle="modal" data-bs-target="#modal{{i.ID_Producto}}": indica que al hacer click en el boton se abre un modal con el id del producto -->
+                        <td>
+                            <form action="{{ url_for('productos.eliminar', id_producto=i.ID_Producto) }}" method="POST">
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+                </table>
+
+                <!-- Modales para editar cada producto (fuera de la tabla para que el HTML sea valido) -->
+                {% for i in productos %}
+                <div class="modal fade" id="modal{{i.ID_Producto}}" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{i.Nombre_Producto}}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{url_for('productos.editar', id_producto=i.ID_Producto)}}" method="post">
+                                
+                                    <label>Nombre Producto</label>
+                                    <input type="text" class="form-control mb-3" name="Nombre_Producto" value="{{i.Nombre_Producto}}">
+                                    <label>Categoria Producto</label>
+                                    <input type="text" class="form-control mb-3" name="Categoria_Producto" value="{{i.Categoria_Producto}}">
+                                    <label>Precio</label>
+                                    <input type="text" class="form-control mb-3" name="Precio" value="{{i.Precio}}">
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div> 
+
+</body>
+</html>

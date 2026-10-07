@@ -13,7 +13,7 @@
             <div class="alert alert-info">{{ mensaje }}</div>
         {% endfor %}
 
-            <div class="car shadow">
+            <div class="card shadow">
                 <div class="card-body">
                     <form method="post">
                         {{ form.hidden_tag() }} <!-- Campo oculto para proteger contra ataques CSRF -->
@@ -32,36 +32,7 @@
 
                         {{ form.submit(class_="btn btn-primary w-100 mt-4")}} <!-- Botón de envío del formulario -->
 
-                        {{ form.correo.label(class_="form-label" )}} <!-- Etiqueta para el campo de correo electrónico -->
-                        {{ form.correo(class_="form-control")}} <!-- Campo de entrada para el correo electrónico -->
-                        {% for error in form.correo.errors %}
-                            <div class="text-danger small">{{error}}</div>
-                        {% endfor %}
-
-                        {{ form.password.label(class_="form-label mt-3")}} <!-- Etiqueta para el campo de contraseña -->
-                        {{ form.password(class_="form-control")}} <!-- Campo de entrada para la contraseña -->
-                        {% for error in form.password.errors %}
-                            <div class="text-danger small">{{error}}</div>
-                        {% endfor %}
-
-                        {{ form.submit(class_="btn btn-primary w-100 mt-4")}} <!-- Botón de envío del formulario -->
-                        {% for error in form.correo.errors %}
-                            <div class="text-danger small">{{error}}</div>
-                        {% endfor %}
-
-                        {{ form.password.label(class_="form-label mt-3")}} <!-- Etiqueta para el campo de contraseña -->
-                        {{ form.password(class_="form-control")}} <!-- Campo de entrada para la contraseña -->
-                        {% for error in form.password.errors %}
-                            <div class="text-danger small">{{error}}</div>
-                        {% endfor %}
-
-                        {{ form.submit(class_="btn btn-primary w-100 mt-4")}} <!-- Botón de envío del formulario -->    
-                        {{ form.password(class_="form-control")}}
-                        {% for error in form.password.errors %}
-                            <div class="text-danger small">{{error}}</div>
-                        {% endfor %}
-
-                        {{ form.submit(class_="btn btn-primary w-100 mt-4")}}
+                    
                     </form>
 
                     <p class="text-center mt-3 mb-0">
